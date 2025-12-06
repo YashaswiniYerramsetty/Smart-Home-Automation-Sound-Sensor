@@ -59,13 +59,13 @@ Serial Monitor displays the actual analog values, which helps in selecting the c
 
 Applications
 
-Noise monitoring
-Sound-activated switches
-Basic automation
-Clap-based control systems
+Noise monitoring,
+Sound-activated switches,
+Basic automation,
+Clap-based control systems.
 
 Limitations
 
-Highly sensitive to vibration
-Not suitable for accurate sound measurement
-Threshold must be manually calibrated
+Highly sensitive to vibration,
+Not suitable for accurate sound measurement,
+Threshold must be manually calibrated.
