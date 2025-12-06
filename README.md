@@ -1,61 +1,71 @@
-# Smart Home Automation Using Sound Sensor
+Sound Sensor Based LED Control System
 
-This project demonstrates a simple home automation system that turns an LED ON or OFF when a clap or loud sound is detected. It uses a sound sensor connected to an Arduino board. This project is beginner-friendly and shows basic knowledge of sensors, Arduino coding, and circuit building.
+This project uses an Arduino board and an analog sound sensor to detect surrounding noise levels and operate an LED accordingly. The purpose of this experiment is to understand how analog sensor values are read through the ADC (Analog-to-Digital Converter) of a microcontroller and how threshold-based decision making can be implemented in embedded C.
 
-## Components Used
-- Arduino Uno
-- Sound Sensor Module
-- LED
-- 220-ohm resistor
-- Jumper wires
-- Breadboard
+Objective
 
-------------------------------------------------------------
+The aim of this project is to design a simple circuit that can identify variations in sound intensity and activate an LED when the sound exceeds a predefined threshold value. This demonstrates basic signal sensing, analog input handling, and actuator control.
 
-## Circuit Connections
+Components Used 
 
-Sound Sensor → Arduino  
-- VCC → 5V  
-- GND → GND  
-- OUT → Digital Pin 2  
+Arduino Uno or Arduino Nano
+Analog sound sensor module LM393
+Single LED 
+220-ohm resistor for the LED
+Breadboard for assembling the circuit
+Jumper wires for connections
+USB cable for uploading the code
 
-LED → Arduino  
-- LED positive (long leg) → Pin 13 (through 220-ohm resistor)  
-- LED negative → GND  
+Circuit Diagram (Text Description)
 
-------------------------------------------------------------
+Sound Sensor AO → Arduino A0
+Sound Sensor VCC → 5V
+Sound Sensor GND → GND
+LED Anode → D13
+LED Cathode → GND through 220Ω resistor
 
-## How It Works
-1. The sound sensor detects loud noise.
-2. The sensor output becomes HIGH.
-3. Arduino reads this signal.
-4. Arduino toggles (switches) the LED ON or OFF.
-5. Each clap or sound will toggle the LED.
+Program
 
-------------------------------------------------------------
-
-## Arduino Code
-
-```cpp
-int sensorPin = 2;
+int soundPin = A0;
 int ledPin = 13;
-int sensorState = 0;
-bool ledState = false;
+int threshold = 300;
 
 void setup() {
-  pinMode(sensorPin, INPUT);
-  pinMode(ledPin, OUTPUT);
-  digitalWrite(ledPin, LOW);
-  Serial.begin(9600);
+    pinMode(ledPin, OUTPUT);
+    Serial.begin(9600);
 }
 
 void loop() {
-  sensorState = digitalRead(sensorPin);
+    int soundValue = analogRead(soundPin);
+    Serial.println(soundValue);
 
-  if (sensorState == HIGH) {
-    ledState = !ledState;
-    digitalWrite(ledPin, ledState);
-    Serial.println("Sound detected. LED toggled.");
-    delay(300);
-  }
+    if (soundValue > threshold) {
+        digitalWrite(ledPin, HIGH);
+    } else {
+        digitalWrite(ledPin, LOW);
+    }
+
+    delay(100);
 }
+
+Working Principle
+
+The sound sensor outputs an analog voltage between 0 and 5V depending on the loudness. The Arduino converts this into a 10-bit digital value (0–1023). A threshold value is set based on the environment. When the sound intensity crosses this value, the LED turns on.
+
+Output Observation
+
+When sound intensity (e.g., claps, taps, voices) rises above the threshold, the LED lights up.
+Serial Monitor displays the actual analog values, which helps in selecting the correct threshold.
+
+Applications
+
+Noise monitoring
+Sound-activated switches
+Basic automation
+Clap-based control systems
+
+Limitations
+
+Highly sensitive to vibration
+Not suitable for accurate sound measurement
+Threshold must be manually calibrated
